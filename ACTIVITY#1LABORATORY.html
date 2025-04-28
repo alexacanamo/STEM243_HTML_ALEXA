@@ -16,6 +16,7 @@
 <!-- 7. If the total price (after discounts) exceeds 5000, an 8% tax will be applied. -->
 
 <script type="text/javascript">
+
     // Define product prices
     const mouse_price = 750;
     const keyboard_price = 1500;
@@ -29,52 +30,58 @@
     let quantity = prompt("Enter Quantity:");
     let isStudent = confirm("Are you a student? Click OK for Yes, Cancel for No.");
 
-
     // Initialize total price and discount variables
     let total_price = 0;
     let discount = 0;
+    let student_discount = 0;
+    let tax = 0;
 
     // Calculate total price and apply discounts based on product type
     if (product == "mouse") {
         total_price = mouse_price * quantity;
         if (total_price > 1000) discount = total_price * 0.1; // 10% discount for mouse
-        document.write("<br> Total Payment: (before discout and tax) " + total_price.toLocaleString ());
     } else if (product == "keyboard") {
         total_price = keyboard_price * quantity;
         if (total_price > 2000) discount = total_price * 0.15; // 15% discount for keyboard
-        document.write("<br> Total Payment: (before discout and tax)" + total_price.toLocaleString ());
     } else if (product == "monitor") {
         total_price = monitor_price * quantity;
         if (total_price > 4000) discount = total_price * 0.07; // 7% discount for monitor
-        document.write("<br> Total Payment: (before discout and tax) " + total_price.toLocaleString ());
     } else if (product == "harddrive" || product == "table") { 
         total_price = (product == "harddrive" ? harddrive_price : table_price) * quantity;
-        document.write("<br> Total Payment: (before discout and tax) " + total_price.toLocaleString ());
         if (total_price > 10000) discount = total_price * 0.1; // 10% discount for harddrive and table exceeding 10000
     } else {
         document.write("Invalid Product Name");
+        throw new Error("Invalid Product Name");
     }
 
+    // Display total before discounts and tax
+    document.write("<br>Total Payment (Before Discount and Tax): " + total_price.toLocaleString());
+
+    // Apply discount
     total_price -= discount;
 
+    // Apply student discount if applicable
     if (isStudent) {
-        let student_discount = total_price * 0.05; // 5% discount for students
+        student_discount = total_price * 0.05; // 5% discount for students
         total_price -= student_discount;
-        document.write("<br>Student Discount: " + student_discount.toLocaleString());
     }
 
-    document.write("<br>Discount Applied: " + discount.toLocaleString());
+    // Display discounts
+    document.write("<br>Student Discount: " + student_discount.toLocaleString());
+    document.write("<br>Discount: " + discount.toLocaleString());
+    document.write("<br>Total Payment (After Discounts, Before Tax): " + total_price.toLocaleString());
 
+    // Apply tax if applicable
     if (total_price > 5000) {
-        let tax = total_price * 0.08; // 8% discount for total price exceeding 5000
+        tax = total_price * 0.08; // 8% tax for total price exceeding 5000
         total_price += tax;
-        document.write("<br> Tax: " + tax.toLocaleString());
     }
 
-    document.write("<br> <b> Total Payment: " + total_price.toLocaleString ());
-
-
+    // Display tax and final total
+    document.write("<br>Tax: " + tax.toLocaleString());
+    document.write("<br><b>Total Payment (After All): " + total_price.toLocaleString() + "</b>");
 </script>
+
 
 
 </body>
